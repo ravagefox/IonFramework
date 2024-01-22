@@ -23,8 +23,9 @@ void runScheduler(TaskScheduler* scheduler, const unsigned long environmentTicks
 
 	Task* task = dequeue(scheduler->queue);
 
-	if (task->init) {
+	if (task->init && !task->doneInit) {
 		task->init();
+		task->doneInit = true;
 	}
 
 	bool executionState = executeTask(task, environmentTicks);
@@ -33,10 +34,12 @@ void runScheduler(TaskScheduler* scheduler, const unsigned long environmentTicks
 	if (!(task->state & TASK_STATE_LONGRUN)) {
 		if ((task->state & TASK_STATE_PAUSE)) {
 			enqueue(scheduler->queue, task);
+			return;
 		}
 		else if ((task->state & TASK_STATE_IDLE)) {
 			startTask(task);
 			enqueue(scheduler->queue, task);
+			return;
 		}
 		else {
 			freeTask(task);
