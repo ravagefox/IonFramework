@@ -62,7 +62,7 @@ void runScheduler(TaskScheduler* scheduler, const unsigned long environmentTicks
 
 void freeScheduler(TaskScheduler* scheduler) {
 	bool canClear = true;
-	for (int i = 0; i < MAX_TASKS_IN_QUEUE; i++) {
+	for (int i = 0; i < MAX_TASK_COUNT; i++) {
 		Task* task = getTaskAtIndex(scheduler->queue, i);
 		if (task & (task->state & TASK_STATE_WAITING)) {
 			canClear = false;
