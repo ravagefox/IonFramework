@@ -21,6 +21,7 @@ typedef struct {
 	unsigned long last_execution;
 	int state;
 	int priority;
+	bool doneInit;
 
 } Task;
 
@@ -31,6 +32,7 @@ const Task EmptyTask = {
 	0,					// last_execution
 	TASK_STATE_IDLE,	// state
 	TASK_PRIORITY_LOW,	// priority
+	false,				// doneInit
 }
 
 void toggleTaskState(Task* task, int state);
