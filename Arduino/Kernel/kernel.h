@@ -2,7 +2,7 @@
 #define __KERNEL__
 
 
-
+// TODO: update the architecture to match the device platform
 #define ARCHITECTURE 0x08
 
 #define ARCHITECTURE_x8   0x08
