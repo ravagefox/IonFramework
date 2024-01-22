@@ -23,7 +23,7 @@ void resumeTask(Task* task) {
 
 void startTask(Task* task) {
 	if ((task->state & TASK_STATE_IDLE)) { return; }
-	task->state |= TASK_STATE_IDLE;
+	task->state &= ~TASK_STATE_IDLE;
 }
 void endTask(Task* task) {
 	if ((task->state & TASK_STATE_ENDREQ)) { return; }
