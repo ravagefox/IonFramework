@@ -31,6 +31,16 @@ void runScheduler(TaskScheduler* scheduler, const unsigned long environmentTicks
 	bool executionState = executeTask(task, environmentTicks);
 	task->last_execution = environmentTicks;
 
+	if ((task->state & TASK_STATE_WAITING)) {
+		enqueue(scheduler->queue, task);
+		return;
+	}
+
+	if ((task->state & TASK_STATE_ENDREQ)) {
+		freeTask(task);
+		return;
+	}
+
 	if (!(task->state & TASK_STATE_LONGRUN)) {
 		if ((task->state & TASK_STATE_PAUSE)) {
 			enqueue(scheduler->queue, task);
